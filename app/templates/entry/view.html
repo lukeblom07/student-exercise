@@ -7,7 +7,7 @@
 {{ super() }}
 {{ govukBackLink({
   'text': "Back",
-  'href': url_for('register.view', register_id=entry.register_id)
+  'href': url_for('entry.register.view', register_id=entry.register_id)
 }) }}
 {%- endblock -%}
 
@@ -19,4 +19,11 @@
     <h1 class="govuk-heading-l">{{ entry.name }}</h1>
   </div>
 </div>
+<div class="govuk-button-group">
+      {{ govukButton({
+        'text': "Edit Entry",
+        'href': url_for('register.entry.edit', register_id=entry.register_id, entry_id=entry.id)
+      }) }}
+</div>
+
 {%- endblock -%}
