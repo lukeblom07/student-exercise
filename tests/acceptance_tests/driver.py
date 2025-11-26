@@ -199,7 +199,7 @@ class Driver:
         self._view_register(register)
         self._view_entry(name)
 
-        self._find_and_click(By.LINK_TEXT, "Edit entry")
+        self._find_and_click(By.LINK_TEXT, "Edit Entry")
 
         name_field = self.browser.find_element(By.NAME, "name")
         assert name_field.get_attribute("value") == name
@@ -213,6 +213,7 @@ class Driver:
         updated_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully updated entry')]")
         assert updated_message is not None, "Updated message not found"
 
+        self._navigate_to_registers()
         self._view_register(register)
 
         try:

@@ -105,11 +105,13 @@ class Dsl:
         )
 
     def update_existing_entry(self, register=DEFAULT_REGISTER_NAME, current_name=DEFAULT_ENTRY_NAME, new_name=""):
+        register_alias = self._encode_alias(register)
         current_name_alias = self._encode_alias(current_name)
         new_name_alias = self._encode_alias(new_name)
-        self.driver.update_existing_entry(register, current_name_alias, new_name_alias)
+        self.driver.update_existing_entry(register_alias, current_name_alias, new_name_alias)
 
     def confirm_entry_updated(self, register=DEFAULT_REGISTER_NAME, old_name=DEFAULT_ENTRY_NAME, new_name=""):
+        register_alias = self._decode_alias(register)
         old_name_alias = self._decode_alias(old_name)
         new_name_alias = self._decode_alias(new_name)
-        self.driver.confirm_entry_updated(old_name_alias, new_name_alias)
+        self.driver.confirm_entry_updated(register_alias, old_name_alias, new_name_alias)
