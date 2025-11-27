@@ -115,3 +115,21 @@ class Dsl:
         old_name_alias = self._decode_alias(old_name)
         new_name_alias = self._decode_alias(new_name)
         self.driver.confirm_entry_updated(register_alias, old_name_alias, new_name_alias)
+
+    def delete_existing_entry(self, entry_name=DEFAULT_ENTRY_NAME, register=DEFAULT_REGISTER_NAME):
+        entry_alias = self._encode_alias(entry_name)
+        register_alias = self._encode_alias(register)
+        self.driver.delete_existing_entry(entry_alias, register_alias)
+
+    def confirm_entry_deletion_requires_confirmation(self, entry_name=DEFAULT_ENTRY_NAME):
+        entry_alias = self._decode_alias(entry_name)
+        self.driver.confirm_entry_deletion_requires_confirmation(entry_alias)
+
+    def confirm_entry_deletion(self, entry_name=DEFAULT_ENTRY_NAME):
+        entry_alias = self._decode_alias(entry_name)
+        self.driver.confirm_entry_deletion()
+
+    def confirm_entry_deleted(self, entry_name=DEFAULT_ENTRY_NAME, register=DEFAULT_REGISTER_NAME):
+        entry_alias = self._decode_alias(entry_name)
+        register_alias = self._decode_alias(register)
+        self.driver.confirm_entry_deleted(entry_alias, register_alias)

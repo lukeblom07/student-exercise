@@ -96,3 +96,11 @@ class FunctionalTests(TestCase):
         self.dsl.ensure_existing_entry(entry_name="Old", register="Edit Entry Test")
         self.dsl.update_existing_entry(current_name="Old", new_name="New", register="Edit Entry Test")
         self.dsl.confirm_entry_updated(old_name="Old", new_name="New", register="Edit Entry Test")
+
+    def test_can_delete_entry(self):
+        self.dsl.ensure_existing_register(name="DeleteEntryTest")
+        self.dsl.ensure_existing_entry(entry_name="Entry1", register="DeleteEntryTest")
+        self.dsl.delete_existing_entry(entry_name="Entry1", register="DeleteEntryTest")
+        self.dsl.confirm_entry_deletion_requires_confirmation(entry_name="Entry1")
+        self.dsl.confirm_entry_deletion(entry_name="Entry1")
+        self.dsl.confirm_entry_deleted(entry_name="Entry1", register="DeleteEntryTest")

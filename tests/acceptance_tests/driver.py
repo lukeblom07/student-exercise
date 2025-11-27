@@ -224,3 +224,36 @@ class Driver:
 
         new_entry = self.browser.find_element(By.XPATH, f"//*[contains(text(), '{new_name}')]")
         assert new_entry is not None, "Entry with new name not found"
+
+    def delete_existing_entry(self, entry_name, register):
+        self._navigate_to_registers()
+        self._view_register(register)
+        self._view_entry(entry_name)
+
+        self._find_and_click(By.LINK_TEXT, "Delete Entry")
+
+    def confirm_entry_deletion_requires_confirmation(self, name):
+        confirmation_prompt = self.browser.find_element(
+            By.XPATH,
+            f"//*[contains(text(),'Are you sure you want to delete the {name} entry?')]",
+        )
+        assert confirmation_prompt is not None, "Confirmation prompt not found"
+
+    def confirm_entry_deletion(self):
+        confirm_checkbox = self.browser.find_element(By.NAME, "confirm")
+        confirm_checkbox.click()
+
+        self._find_and_click(By.NAME, "submit")
+
+    def confirm_entry_deleted(self, entry_alias, register_alias):
+        deleted_message = self.browser.find_element(By.XPATH, "//*[contains(text(),'Successfully deleted entry')]")
+        assert deleted_message is not None, "Deleted message not found"
+
+        self._navigate_to_registers()
+        self._view_register(register_alias)
+
+        try:
+            self.browser.find_element(By.XPATH, f"//*[contains(text(), '{entry_alias}')]")
+            raise AssertionError("Deleted entry still exists")
+        except NoSuchElementException:
+            pass
